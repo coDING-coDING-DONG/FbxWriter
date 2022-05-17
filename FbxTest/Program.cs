@@ -10,11 +10,11 @@ namespace FbxTest
 	{
 		static void Main(string[] args)
 		{
-			//var document = FbxIO.ReadBinary(args[0]);
-			//FbxIO.WriteAscii(document, Path.GetDirectoryName(args[0]) + "/test_ascii.fbx");
-			var reader = new FbxAsciiReader(new FileStream(Path.GetDirectoryName(args[0]) + "/test_ascii.fbx", FileMode.Open));
+			var reader = new FbxAsciiReader(new FileStream(Directory.GetCurrentDirectory() + "/Test/test_ascii.fbx", FileMode.Open));
 			var doc = reader.Read();
-			FbxIO.WriteAscii(doc, Path.GetDirectoryName(args[0]) + "/test_ascii_2.fbx");
+			FbxIO.WriteAscii(doc, Directory.GetCurrentDirectory() + "/Test/test_ascii_2.fbx");
+			Console.WriteLine("end");
+			Console.ReadKey();
 		}
 	}
 }

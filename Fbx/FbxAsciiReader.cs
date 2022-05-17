@@ -207,16 +207,27 @@ namespace Fbx
 							if (str.Split('.', 'e', 'E')[1].Length > 6)
 							{
 								double d;
-								if (!double.TryParse(str, out d))
-									throw new FbxException(line, column,
-										"Invalid number");
+								try
+								{
+									d = double.Parse(str, System.Globalization.CultureInfo.InvariantCulture);
+								}
+								catch
+								{
+									throw new FbxException(line, column, "Invalid number");
+								}
 								return d;
-							} else
+							}
+							else
 							{
 								float f;
-								if (!float.TryParse(str, out f))
-									throw new FbxException(line, column,
-										"Invalid number");
+								try
+								{
+									f = float.Parse(str, System.Globalization.CultureInfo.InvariantCulture);
+								}
+								catch
+								{
+									throw new FbxException(line, column, "Invalid number");
+								}
 								return f;
 							}
 						}

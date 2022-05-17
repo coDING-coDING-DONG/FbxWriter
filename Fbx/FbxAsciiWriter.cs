@@ -57,9 +57,10 @@ namespace Fbx
 				if (p is string)
 				{
 					sb.Append('"').Append(p).Append('"');
-				} else if (p is Array)
+				}
+				else if (p is Array)
 				{
-					var array = (Array) p;
+					var array = (Array)p;
 					var elementType = p.GetType().GetElementType();
 					// ReSharper disable once PossibleNullReferenceException
 					// We know it's an array, so we don't need to check for null
@@ -75,7 +76,7 @@ namespace Fbx
 						sb.Append("a: ");
 					}
 					bool pFirst = true;
-					foreach (var v in (Array) p)
+					foreach (var v in (Array)p)
 					{
 						if (!pFirst)
 							sb.Append(',');
@@ -85,7 +86,7 @@ namespace Fbx
 							sb.Append('\n');
 							lineStart = sb.Length;
 						}
-						sb.Append(vstr);
+						sb.Append(vstr.Replace(',','.'));
 						pFirst = false;
 					}
 					if (writeArrayLength)
@@ -95,10 +96,14 @@ namespace Fbx
 							sb.Append('\t');
 						sb.Append('}');
 					}
-				} else if (p is char)
-					sb.Append((char) p);
-				else if(p.GetType().IsPrimitive && p is IFormattable)
-					sb.Append(p);
+				}
+				else if (p is char)
+					sb.Append((char)p);
+				else if (p.GetType().IsPrimitive && p is IFormattable)
+				{
+					string s1 = p.ToString().Replace(',', '.');
+					sb.Append(s1);
+				}
 				else
 					throw new FbxException(nodePath, j,
 						"Invalid property type " + p.GetType());
